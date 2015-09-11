@@ -43,11 +43,11 @@ function spawn(guardCount, harvesterCount, builderCount){
     if (Game.spawns.Spawn1.energy >= 300) {
 
         if (guardCount < 3) {
-            Game.spawns.Spawn1.createCreep([TOUGH, ATTACK, MOVE, MOVE], null, {role: GUARD});
+            Game.spawns.Spawn1.createCreep([TOUGH, ATTACK, ATTACK, MOVE, MOVE], null, {role: GUARD});
         } else if (harvesterCount < 4) {
             Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
         } else if (builderCount < 3) {
-            Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], null, {role: BUILDER});
+            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: BUILDER});
         }
         else {
             Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, CARRY, MOVE], null, {role: UPGRADER});
