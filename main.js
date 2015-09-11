@@ -1,51 +1,59 @@
 var harvester = require('harvester');
 var builder = require('builder');
-var guard = require('guard');
+const GUARD = 'guard';
+var guard = require(GUARD);
 var upgrader = require('upgrader');
 
-var guardCount = 0;
+const HARVESTER = 'harvester';
+const BUILDER = 'builder';
+const UPGRADER = 'upgrader';
+
+var gCount = 0;
 var hCount = 0;
 var bCount = 0;
-
 
 for (var name in Game.creeps) {
     var creep = Game.creeps[name];
 
-    if (creep.memory.role == 'harvester') {
+    if (creep.memory.role == HARVESTER) {
         harvester(creep);
         ++hCount;
     }
 
-    if (creep.memory.role == 'builder') {
+    if (creep.memory.role == BUILDER) {
         builder(creep);
         ++bCount;
     }
 
-    if (creep.memory.role == 'guard') {
+    if (creep.memory.role == GUARD) {
         guard(creep);
-        ++guardCount;
+        ++gCount;
 
     }
 
-    if (creep.memory.role == 'upgrader') {
+    if (creep.memory.role == UPGRADER) {
         upgrader(creep);
 
     }
+
+    spawn(gCount, hCount, bCount);
 }
 
-if (Game.spawns.Spawn1.energy >= 300) {
+function spawn(guardCount, harvesterCount, builderCount){
+    if (Game.spawns.Spawn1.energy >= 300) {
 
-    if (guardCount < 3) {
-        Game.spawns.Spawn1.createCreep([TOUGH, ATTACK, MOVE, MOVE], null, {role: 'guard'});
-    } else if (hCount < 4) {
-        Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], null, {role: 'harvester'});
-    } else if (bCount < 3) {
-        Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], null, {role: 'builder'});
+        if (guardCount < 3) {
+            Game.spawns.Spawn1.createCreep([TOUGH, ATTACK, MOVE, MOVE], null, {role: GUARD});
+        } else if (harvesterCount < 4) {
+            Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], null, {role: HARVESTER});
+        } else if (builderCount < 3) {
+            Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], null, {role: BUILDER});
+        }
+        else {
+            Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], null, {role: UPGRADER});
+        }
     }
-    else {
-        Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], null, {role: 'upgrader'});
-    }
+
 }
-      
     
  
