@@ -11,6 +11,7 @@ const UPGRADER = 'upgrader';
 var gCount = 0;
 var hCount = 0;
 var bCount = 0;
+var uCount = 0;
 
 for (var name in Game.creeps) {
     var creep = Game.creeps[name];
@@ -33,13 +34,13 @@ for (var name in Game.creeps) {
 
     if (creep.memory.role == UPGRADER) {
         upgrader(creep);
-
+        ++uCount;
     }
 
-    spawn(gCount, hCount, bCount);
+    spawn(gCount, hCount, bCount, uCount);
 }
 
-function spawn(guardCount, harvesterCount, builderCount){
+function spawn(guardCount, harvesterCount, builderCount, upgraderCount) {
     if (Game.spawns.Spawn1.energy >= 300) {
 
         if (guardCount < 3) {
@@ -49,11 +50,11 @@ function spawn(guardCount, harvesterCount, builderCount){
         } else if (builderCount < 3) {
             Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: BUILDER});
         }
-        else {
+        else if (upgraderCount < 3) {
             Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, CARRY, MOVE], null, {role: UPGRADER});
+        } else {
+            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: BUILDER});
         }
     }
 
 }
-    
- 
