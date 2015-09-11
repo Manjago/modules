@@ -9,8 +9,9 @@ module.exports = function (creep) {
 
     if (creep.carry.energy == 0) {
         creep.say('need energy');
-        creep.moveTo(Game.spawns.Spawn1);
-        Game.spawns.Spawn1.transferEnergy(creep);
+        var sources = creep.room.find(FIND_SOURCES);
+        creep.moveTo(sources[0]);
+        creep.harvest(sources[0]);
     }
     else {
         var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
