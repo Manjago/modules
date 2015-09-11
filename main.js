@@ -50,7 +50,7 @@ function spawn(guardCount, harvesterCount, builderCount){
             Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], null, {role: BUILDER});
         }
         else {
-            Game.spawns.Spawn1.createCreep([WORK, CARRY, MOVE], null, {role: UPGRADER});
+            Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, CARRY, MOVE], null, {role: UPGRADER});
         }
     }
 
