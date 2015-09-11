@@ -8,12 +8,18 @@
 module.exports = function (creep) {
 
     if (creep.carry.energy == 0) {
+        creep.memory.mode = 'LOAD';
         creep.say('need energy');
         var sources = creep.room.find(FIND_SOURCES);
         creep.moveTo(sources[0]);
         creep.harvest(sources[0]);
-    }
-    else {
+    } else if ((creep.carry.energy < creep.carryCapacity) && (creep.memory.mode == 'LOAD')){
+        creep.say('load');
+        var sources = creep.room.find(FIND_SOURCES);
+        creep.moveTo(sources[0]);
+        creep.harvest(sources[0]);
+    } else {
+        creep.memory.mode = 'WORK';
         var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
         if (targets.length) {
             creep.say('got work');
