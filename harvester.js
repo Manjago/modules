@@ -7,15 +7,15 @@
  */
 module.exports = function (creep) {
 
-	if(creep.carry.energy < creep.carryCapacity) {
-		var sources = creep.room.find(FIND_SOURCES);
-		creep.moveTo(sources[0]);
-		creep.harvest(sources[0]);
-		creep.say("0 harv");
-	}
-	else {
-		creep.moveTo(Game.spawns.Spawn1);
-		creep.transferEnergy(Game.spawns.Spawn1)
-		creep.say("harv");
-	}
+    if (creep.carry.energy < creep.carryCapacity) {
+        var sources = creep.room.find(FIND_SOURCES);
+        creep.moveTo(sources[0]);
+        creep.harvest(sources[0]);
+        creep.say("0 harv");
+    }
+    else {
+        creep.moveTo(Game.spawns.Spawn1);
+        creep.transferEnergy(Game.spawns.Spawn1)
+        creep.say("harv");
+    }
 }

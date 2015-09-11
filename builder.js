@@ -25,29 +25,29 @@ module.exports = function (creep) {
                 creep.say('rep 30000');
                 creep.moveTo(structuresNeedsRepair[0]);
                 creep.repair(structuresNeedsRepair[0]);
-            }  
+            }
             else {
-                
+
                 var structuresNeedsRepair = findRepo(3000);
                 if (structuresNeedsRepair.length) {
-                creep.say('rep 3000');
-                creep.moveTo(structuresNeedsRepair[0]);
-                creep.repair(structuresNeedsRepair[0]);
+                    creep.say('rep 3000');
+                    creep.moveTo(structuresNeedsRepair[0]);
+                    creep.repair(structuresNeedsRepair[0]);
                 } else {
-                  creep.say('no work');
-                } 
-                
+                    creep.say('no work');
+                }
+
             }
         }
     }
-}    
+}
 
 
-function findRepo(divider){
-             var structuresNeedsRepair = Game.rooms.E9N14.find(FIND_STRUCTURES, {
-                filter: function (i) {
-                    return ("constructedWall" == i.structureType) && (i.hits < i.hitsMax/divider);
-                }
-            });
-            return structuresNeedsRepair;
+function findRepo(divider) {
+    var structuresNeedsRepair = Game.rooms.E9N14.find(FIND_STRUCTURES, {
+        filter: function (i) {
+            return ("constructedWall" == i.structureType) && (i.hits < i.hitsMax / divider);
+        }
+    });
+    return structuresNeedsRepair;
 }
