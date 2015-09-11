@@ -14,8 +14,31 @@ module.exports = function (creep) {
         creep.say("0 harv");
     }
     else {
-        creep.moveTo(Game.spawns.Spawn1);
-        creep.transferEnergy(Game.spawns.Spawn1)
-        creep.say("harv");
+
+        var exts = creep.room.find(FIND_MY_STRUCTURES, {
+            filter: function (i) {
+                return STRUCTURE_EXTENSION == i.structureType
+            }
+        });
+
+        var foundExt = false;
+        for (var inx in exts) {
+            var ext = exts[inx];
+
+            if (ext.energy < ext.energyCapacity){
+                foundExt = true;
+                creep.moveTo(ext);
+                creep.transferEnergy(ext);
+                creep.say("harv ext");
+                break;
+            }
+        }
+
+        if (!foundExt){
+            creep.moveTo(Game.spawns.Spawn1);
+            creep.transferEnergy(Game.spawns.Spawn1)
+            creep.say("harv");
+        }
+
     }
 }
