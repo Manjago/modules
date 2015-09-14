@@ -82,7 +82,7 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         if (harvesterCount < 1) {
             Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
         } else if (guardCount < 1) {
-            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, ATTACK, MOVE, MOVE], null, {role: GUARD});
+            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, ATTACK, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH], null, {role: GUARD});
         } else if (healerCount < 1) {
             Game.spawns.Spawn1.createCreep([HEAL, HEAL, MOVE], null, {role: HEALER});
         } else if (guardCount < 3) {
@@ -102,7 +102,7 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         if (harvesterCount < 1) {
             Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
         } else if (guardCount < 1) {
-            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, ATTACK, MOVE], null, {role: GUARD});
+            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, ATTACK, MOVE, TOUGH, TOUGH], null, {role: GUARD});
         } else if (healerCount < 1) {
             Game.spawns.Spawn1.createCreep([HEAL, MOVE], null, {role: HEALER});
         } else if (guardCount < 3) {
