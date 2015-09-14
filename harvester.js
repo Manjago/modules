@@ -5,7 +5,7 @@
  * You can import it from another modules like this:
  * var mod = require('harvester'); // -> 'a thing'
  */
-module.exports = function (creep) {
+module.exports = function (creep, exts) {
 
     if (creep.carry.energy < creep.carryCapacity) {
         var sources = creep.room.find(FIND_SOURCES);
@@ -14,12 +14,6 @@ module.exports = function (creep) {
         creep.say("0 harv");
     }
     else {
-
-        var exts = creep.room.find(FIND_MY_STRUCTURES, {
-            filter: function (i) {
-                return STRUCTURE_EXTENSION == i.structureType
-            }
-        });
 
         var foundExt = false;
         for (var inx in exts) {

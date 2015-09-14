@@ -26,7 +26,7 @@ module.exports = function (creep) {
             creep.moveTo(targets[0]);
             creep.build(targets[0]);
         } else {
-            var structuresNeedsRepair = findRepo(3000);
+            var structuresNeedsRepair = findRepo(3000, creep.room);
 
             if (structuresNeedsRepair.length) {
                 creep.say('rep 3000');
@@ -35,7 +35,7 @@ module.exports = function (creep) {
             }
             else {
 
-                var structuresNeedsRepair = findRepo(300);
+                var structuresNeedsRepair = findRepo(300, creep.room);
                 if (structuresNeedsRepair.length) {
                     creep.say('rep 300');
                     creep.moveTo(structuresNeedsRepair[0]);
@@ -50,8 +50,8 @@ module.exports = function (creep) {
 }
 
 
-function findRepo(divider) {
-    var structuresNeedsRepair = Game.rooms.E9N14.find(FIND_STRUCTURES, {
+function findRepo(divider, room) {
+    var structuresNeedsRepair = room.find(FIND_STRUCTURES, {
         filter: function (i) {
             return ("constructedWall" == i.structureType) && (i.hits < i.hitsMax / divider);
         }
