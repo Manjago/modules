@@ -8,6 +8,8 @@ module.exports = function (creep) {
     if(target) {
         creep.moveTo(target);
         creep.heal(target);
+    } else {
+        creep.moveTo(Game.flags.Flag1);
     }
 
 };
