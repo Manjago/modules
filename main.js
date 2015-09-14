@@ -13,6 +13,18 @@ var hCount = 0;
 var bCount = 0;
 var uCount = 0;
 
+for (var name in Memory.creeps) {
+    if (!Game.creeps[name]) {
+        delete Memory.creeps[name];
+    }
+}
+
+for (var name in Memory.spawns) {
+    if (!Game.spawns[name]) {
+        delete Memory.spawns[name];
+    }
+}
+
 var exts = Game.rooms.E12N2.find(FIND_MY_STRUCTURES, {
     filter: function (i) {
         return STRUCTURE_EXTENSION == i.structureType
