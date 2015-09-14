@@ -70,14 +70,15 @@ for (var name in Game.creeps) {
 function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCount) {
 
     var ee = Game.spawns.Spawn1.energy;
+    var extmode = false;
     for (var inx in exts) {
+        extmode = true;
         ee = ee + exts[inx].energy;
     }
 
+    if (extmode && ee >= 550) {
 
-    if (ee >= 550) {
-
-        if (guardCount < 3) {
+        if (guardCount < 1) {
             Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, ATTACK, MOVE, MOVE], null, {role: GUARD});
         } else if (harvesterCount < 1) {
             Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
@@ -95,6 +96,27 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         } else {
             Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
         }
+    } else if (ee >= 300) {
+
+        if (guardCount < 1) {
+            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, ATTACK, MOVE], null, {role: GUARD});
+        } else if (harvesterCount < 1) {
+            Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
+        } else if (healerCount < 1) {
+            Game.spawns.Spawn1.createCreep([HEAL, MOVE], null, {role: HEALER});
+        } else if (guardCount < 3) {
+            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, ATTACK, MOVE], null, {role: GUARD});
+        } else if (harvesterCount < 5) {
+            Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
+        } else if (builderCount < 2) {
+            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: BUILDER});
+        }
+        else if (upgraderCount < 3) {
+            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: UPGRADER});
+        } else {
+            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: UPGRADER});
+        }
+
     }
 
 }
