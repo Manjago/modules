@@ -64,8 +64,9 @@ for (var name in Game.creeps) {
         ++healCount;
     }
 
-    spawn(gCount, hCount, bCount, uCount, healCount);
 }
+
+spawn(gCount, hCount, bCount, uCount, healCount);
 
 function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCount) {
 
