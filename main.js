@@ -1,9 +1,9 @@
-var harvester = require('harvester');
-var builder = require('builder');
-const GUARD = 'guard';
-var guard = require(GUARD);
-var upgrader = require('upgrader');
+var harvester = require('./harvester');
+var builder = require('./builder');
+var guard = require('./guard');
+var upgrader = require('./upgrader');
 
+const GUARD = 'guard';
 const HARVESTER = 'harvester';
 const BUILDER = 'builder';
 const UPGRADER = 'upgrader';
@@ -52,7 +52,6 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount) {
     for (var inx in exts) {
         ee = ee + exts[inx].energy;
     }
-
 
 
     if (ee >= 550) {
