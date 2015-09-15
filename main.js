@@ -77,9 +77,11 @@ Energy.prototype.findClosestCarrier = function() {
 mainRoom.find(FIND_DROPPED_ENERGY).forEach(function(energy) {
     var creep = energy.findClosestCarrier();
     //console.log('found ' + creep + ' ' + creep.carry.energy + ' ' + creep.carryCapacity);
-    creep.moveTo(energy);
-    creep.pickup(energy);
-    creep.say("dropped");
+    if (creep != null && energy != null){
+      creep.moveTo(energy);
+      creep.pickup(energy);
+      creep.say("dropped");
+    }
 });
 
 spawn(gCount, hCount, bCount, uCount, healCount);
