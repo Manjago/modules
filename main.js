@@ -28,7 +28,7 @@ var bCount = 0;
 var uCount = 0;
 var healCount = 0;
 
-var mainRoom = Game.rooms.E12N2;
+var mainRoom = Game.rooms.E14S9;
 
 var exts = mainRoom.find(FIND_MY_STRUCTURES, {
     filter: function (i) {
@@ -116,7 +116,7 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         } else {
             Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
         }
-    }  else if ((extCount == 0) && ee >= 300) {
+    }  else if ((extCount < 5) && ee >= 300) {
 
         if (harvesterCount < 1) {
             Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
