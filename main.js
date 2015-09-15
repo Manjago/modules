@@ -116,7 +116,7 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         } else {
             Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
         }
-    }  else if (ee >= 300) {
+    }  else if ((extCount == 0) && ee >= 300) {
 
         if (harvesterCount < 1) {
             Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
