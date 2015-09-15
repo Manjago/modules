@@ -71,13 +71,13 @@ spawn(gCount, hCount, bCount, uCount, healCount);
 function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCount) {
 
     var ee = Game.spawns.Spawn1.energy;
-    var extmode = false;
+    var extCount = 0;
     for (var inx in exts) {
-        extmode = true;
+        ++extCount;
         ee = ee + exts[inx].energy;
     }
 
-    if (extmode && ee >= 550) {
+    if ((extCount < 10) && ee >= 550) {
 
         if (harvesterCount < 1) {
             Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
@@ -97,7 +97,26 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         } else {
             Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
         }
-    } else if (ee >= 300) {
+    } else if ((extCount >= 10) && ee >= 800) {
+        if (harvesterCount < 1) {
+            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
+        } else if (guardCount < 1) {
+            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH ], null, {role: GUARD});
+        } else if (healerCount < 1) {
+            Game.spawns.Spawn1.createCreep([HEAL, HEAL, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], null, {role: HEALER});
+        } else if (guardCount < 3) {
+            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH ], null, {role: GUARD});
+        } else if (harvesterCount < 5) {
+            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
+        } else if (builderCount < 4) {
+            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], null, {role: BUILDER});
+        }
+        else if (upgraderCount < 3) {
+            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
+        } else {
+            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
+        }
+    }  else if (ee >= 300) {
 
         if (harvesterCount < 1) {
             Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
