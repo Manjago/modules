@@ -13,39 +13,61 @@ module.exports = function (creep) {
         var sources = creep.room.find(FIND_SOURCES);
         creep.moveTo(sources[0]);
         creep.harvest(sources[0]);
-    } else if ((creep.carry.energy < creep.carryCapacity) && (creep.memory.mode == 'LOAD')){
+    } else if ((creep.carry.energy < creep.carryCapacity) && (creep.memory.mode == 'LOAD')) {
         creep.say('load');
         var sources = creep.room.find(FIND_SOURCES);
         creep.moveTo(sources[0]);
         creep.harvest(sources[0]);
     } else {
+
         creep.memory.mode = 'WORK';
-        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+        var targets = creep.room.find(FIND_CONSTRUCTION_SITES, {
+            filter: function (i) {
+                return STRUCTURE_EXTENSION == i.structureType
+            }
+        });
+
         if (targets.length) {
-            creep.say('got work');
+            creep.say('work ext');
             creep.moveTo(targets[0]);
             creep.build(targets[0]);
         } else {
-            var structuresNeedsRepair = findRepo(3000, creep.room);
 
-            if (structuresNeedsRepair.length) {
-                creep.say('rep 3000');
-                creep.moveTo(structuresNeedsRepair[0]);
-                creep.repair(structuresNeedsRepair[0]);
-            }
-            else {
+            var targets = creep.room.find(FIND_CONSTRUCTION_SITES, {
+                filter: function (i) {
+                    return STRUCTURE_EXTENSION != i.structureType
+                }
+            });
 
-                var structuresNeedsRepair = findRepo(1500, creep.room);
+            if (targets.length) {
+                creep.say('work wall');
+                creep.moveTo(targets[0]);
+                creep.build(targets[0]);
+            } else {
+                var structuresNeedsRepair = findRepo(3000, creep.room);
+
                 if (structuresNeedsRepair.length) {
-                    creep.say('rep 1500');
+                    creep.say('rep 3000');
                     creep.moveTo(structuresNeedsRepair[0]);
                     creep.repair(structuresNeedsRepair[0]);
-                } else {
-                    creep.say('no work');
-                    creep.moveTo(Game.flags.FlagBuilder);
+                }
+                else {
+
+                    var structuresNeedsRepair = findRepo(1500, creep.room);
+                    if (structuresNeedsRepair.length) {
+                        creep.say('rep 1500');
+                        creep.moveTo(structuresNeedsRepair[0]);
+                        creep.repair(structuresNeedsRepair[0]);
+                    } else {
+                        creep.say('no work');
+                        creep.moveTo(Game.flags.FlagBuilder);
+                    }
+
                 }
 
             }
+
+
         }
     }
 }
