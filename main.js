@@ -68,7 +68,7 @@ for (var name in Game.creeps) {
 
 Energy.prototype.findClosestCarrier = function() {
     return this.pos.findClosestByPath(FIND_MY_CREEPS, { filter: function(i) {
-        return i.getActiveBodyparts(CARRY) > 0 && i.carry.energy < i.carryCapacity;
+        return i.getActiveBodyparts(CARRY) > 0 && (i.carry.energy < i.carryCapacity) && i.memory.role == HARVESTER;
     }});
 };
 
@@ -142,7 +142,7 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
             Game.spawns.Spawn1.createCreep([RANGED_ATTACK, ATTACK, MOVE], null, {role: GUARD});
         } else if (harvesterCount < 5) {
             Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
-        } else if (builderCount < 2) {
+        } else if (builderCount < 5) {
             Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: BUILDER});
         }
         else if (upgraderCount < 3) {
