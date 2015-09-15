@@ -66,6 +66,20 @@ for (var name in Game.creeps) {
 
 }
 
+Energy.prototype.findClosestCarrier = function() {
+    return this.pos.findClosestByPath(FIND_MY_CREEPS, { filter: function(i) {
+        return i.getActiveBodyparts(CARRY) > 0 && i.carry.energy < i.carryCapacity;
+    }});
+};
+
+mainRoom.find(FIND_DROPPED_ENERGY).forEach(function(energy) {
+    var creep = energy.findClosestCarrier();
+    console.log('found ' + creep + ' ' + creep.carry.energy + ' ' + creep.carryCapacity);
+    creep.moveTo(energy);
+    creep.pickup(energy);
+    creep.say("dropped");
+});
+
 spawn(gCount, hCount, bCount, uCount, healCount);
 
 function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCount) {
