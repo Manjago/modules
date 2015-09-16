@@ -95,11 +95,9 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         ee = ee + exts[inx].energy;
     }
 
-    console.log('exts = ' + extCount + ', total energy = ' + ee);
-
     if ((extCount < 10) && ee >= 550) {
 
-        if (harvesterCount < 1) {
+        if (harvesterCount < 2) {
             Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
         } else if (guardCount < 1) {
             Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, ATTACK, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH], null, {role: GUARD});
@@ -118,7 +116,7 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
             Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
         }
     } else if ((extCount >= 10) && ee >= 800) {
-        if (harvesterCount < 1) {
+        if (harvesterCount < 2) {
             Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
         } else if (guardCount < 1) {
             Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH ], null, {role: GUARD});
@@ -138,7 +136,7 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         }
     }  else if ((extCount < 5) && ee >= 300) {
 
-        if (harvesterCount < 1) {
+        if (harvesterCount < 2) {
             Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
         } else if (guardCount < 1) {
             Game.spawns.Spawn1.createCreep([RANGED_ATTACK, ATTACK, MOVE, TOUGH, TOUGH], null, {role: GUARD});
