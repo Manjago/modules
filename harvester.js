@@ -7,7 +7,7 @@
  */
 module.exports = function (creep, exts) {
 
-    if (creep.carry.energy < creep.carryCapacity) {
+    if (creep.carry.energy == 0) {
         var sources = creep.room.find(FIND_SOURCES);
         creep.moveTo(sources[0]);
         creep.harvest(sources[0]);
@@ -35,4 +35,4 @@ module.exports = function (creep, exts) {
         }
 
     }
-}
+};
