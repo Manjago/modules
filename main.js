@@ -95,6 +95,8 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         ee = ee + exts[inx].energy;
     }
 
+    consloe.log('exts = ' + extCount + ', total energy = ' + ee);
+
     if ((extCount < 10) && ee >= 550) {
 
         if (harvesterCount < 1) {
