@@ -2,7 +2,7 @@
   "name": "screeps",
   "version": "1.0.0",
   "description": "screeps",
-  "main": "main.js",
+  "main": "test.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
