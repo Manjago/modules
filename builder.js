@@ -44,18 +44,19 @@ module.exports = function (creep) {
                 creep.moveTo(targets[0]);
                 creep.build(targets[0]);
             } else {
-                var structuresNeedsRepair = findRepo(3000, creep.room);
+                //todo изжить это безобразие
+                var structuresNeedsRepair = findRepo(900, creep.room);
 
                 if (structuresNeedsRepair.length) {
-                    creep.say('rep 3000');
+                    creep.say('rep 900');
                     creep.moveTo(structuresNeedsRepair[0]);
                     creep.repair(structuresNeedsRepair[0]);
                 }
                 else {
 
-                    var structuresNeedsRepair = findRepo(1500, creep.room);
+                    var structuresNeedsRepair = findRepo(300, creep.room);
                     if (structuresNeedsRepair.length) {
-                        creep.say('rep 1500');
+                        creep.say('rep 300');
                         creep.moveTo(structuresNeedsRepair[0]);
                         creep.repair(structuresNeedsRepair[0]);
                     } else {
