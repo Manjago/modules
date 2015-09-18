@@ -92,6 +92,7 @@ mainRoom.find(FIND_DROPPED_ENERGY).forEach(function(energy) {
 spawn(gCount, hCount, bCount, uCount, healCount);
 
 function sp(role, cost){
+    console.log('spawn ' + role + ' ' + cost);
     Game.spawns.Spawn1.createCreep(spawner(role, cost), null, {role: role});
 }
 
