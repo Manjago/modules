@@ -117,6 +117,11 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         cost = 1300;
     }
 
+    // страховка от всеобщей пустоты
+    if (harvesterCount == 0 && cost == 0){
+        cost = 300;
+    }
+
     if (cost != 0){
         if (harvesterCount < 2) {
             sp(HARVESTER, cost);
