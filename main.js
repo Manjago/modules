@@ -86,6 +86,9 @@ mainRoom.find(FIND_DROPPED_ENERGY).forEach(function(energy) {
       creep.moveTo(energy);
       creep.pickup(energy);
       creep.say("dropped");
+      if (creep.carry.energy > 0){
+          creep.memory.mode = 'WORK';
+      }
     }
 });
 
