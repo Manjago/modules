@@ -78,7 +78,6 @@ module.exports = function (creep) {
     function tryRepairAll() {
         var hasWork = false;
         for (var i = 3000; i >= 0; i -= 100) {
-            console.log(i);
             if (tryRepair(i)) {
                 hasWork = true;
                 break;
