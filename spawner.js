@@ -28,6 +28,8 @@ function bodyGuard(cost){
             return [RANGED_ATTACK, RANGED_ATTACK, ATTACK, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH]; //550
         case 800:
             return [RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH ]; //800
+        case 1300:
+            return [RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, TOUGH, TOUGH, TOUGH ]; //1300
     }
 
 }
@@ -41,6 +43,8 @@ function bodyHarvester(cost){
             return [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE]; // 550
         case 800:
             return [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE]; // 800
+        case 1300:
+            return [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE]; // 1300
     }
 
 }
@@ -54,6 +58,8 @@ function bodyBuilder(cost){
             return [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE]; //550
         case 800:
             return [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE]; //800
+        case 1300:
+            return [WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE]; //1300
     }
 
 }
@@ -67,6 +73,8 @@ function bodyUpgrader(cost){
             return [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE]; // 550
         case 800:
             return [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE]; // 800
+        case 1300:
+            return [WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE]; // 1300
     }
 
 }
@@ -80,6 +88,8 @@ function bodyHealer(cost){
             return [HEAL, HEAL, MOVE];
         case 800:
             return [HEAL, HEAL, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+        case 1300:
+            return [HEAL, HEAL, HEAL, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
     }
 
 }
