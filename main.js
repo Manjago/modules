@@ -12,11 +12,13 @@ for (var name in Memory.spawns) {
     }
 }
 
+
 var harvester = require('harvester');
 var builder = require('builder');
 var guard = require('guard');
 var upgrader = require('upgrader');
 var healer = require('healer');
+var spawner = require('spawner');
 
 const GUARD = 'guard';
 const HARVESTER = 'harvester';
@@ -30,7 +32,11 @@ var bCount = 0;
 var uCount = 0;
 var healCount = 0;
 
-var mainRoom = Game.rooms.E14S9;
+var mainRoom;
+for (var ind in Game.rooms){
+    mainRoom = Game.rooms[ind];
+    break;
+}
 
 var exts = mainRoom.find(FIND_MY_STRUCTURES, {
     filter: function (i) {
@@ -70,13 +76,12 @@ for (var name in Game.creeps) {
 
 Energy.prototype.findClosestCarrier = function() {
     return this.pos.findClosestByPath(FIND_MY_CREEPS, { filter: function(i) {
-        return i.getActiveBodyparts(CARRY) > 0 && (i.carry.energy < i.carryCapacity) && i.memory.role == HARVESTER;
+        return i.getActiveBodyparts(CARRY) > 0 && (i.carry.energy < i.carryCapacity);
     }});
 };
 
 mainRoom.find(FIND_DROPPED_ENERGY).forEach(function(energy) {
     var creep = energy.findClosestCarrier();
-    //console.log('found ' + creep + ' ' + creep.carry.energy + ' ' + creep.carryCapacity);
     if (creep != null && energy != null){
       creep.moveTo(energy);
       creep.pickup(energy);
@@ -85,6 +90,10 @@ mainRoom.find(FIND_DROPPED_ENERGY).forEach(function(energy) {
 });
 
 spawn(gCount, hCount, bCount, uCount, healCount);
+
+function sp(role, cost){
+    Game.spawns.Spawn1.createCreep(spawner(role, cost), null, {role: role});
+}
 
 function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCount) {
 
@@ -95,66 +104,41 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         ee = ee + exts[inx].energy;
     }
 
-    if ((extCount < 10) && ee >= 550) {
+    var cost = 0;
 
+    if (extCount < 5 && ee >= 300){
+        cost = 300;
+    } else if (extCount < 10 && ee >= 550) {
+        cost = 550;
+    } else if (extCount < 20 && ee >= 800) {
+        cost = 800;
+    } else if (extCount >= 20 && ee >= 800){
+        cost = 800;
+    }
+
+    if (cost != 0){
         if (harvesterCount < 2) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
+            sp(HARVESTER, cost);
         } else if (guardCount < 1) {
-            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, ATTACK, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH], null, {role: GUARD});
+            sp(GUARD, cost);
         } else if (healerCount < 1) {
-            Game.spawns.Spawn1.createCreep([HEAL, HEAL, MOVE], null, {role: HEALER});
-        } else if (guardCount < 3) {
-            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, ATTACK, MOVE, MOVE], null, {role: GUARD});
-        } else if (harvesterCount < 5) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
-        } else if (builderCount < 5) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: BUILDER});
-        }
-        else if (upgraderCount < 3) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
-        } else {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
-        }
-    } else if ((extCount >= 10) && ee >= 800) {
-        if (harvesterCount < 2) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
-        } else if (guardCount < 1) {
-            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH ], null, {role: GUARD});
-        } else if (healerCount < 1) {
-            Game.spawns.Spawn1.createCreep([HEAL, HEAL, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], null, {role: HEALER});
-        } else if (guardCount < 3) {
-            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, TOUGH, TOUGH, TOUGH, TOUGH ], null, {role: GUARD});
+            sp(HEALER, cost);
+        } else if (builderCount < 1) {
+            sp(BUILDER, cost);
+        } else if (upgraderCount < 1) {
+            sp(UPGRADER, cost);
+        } else if (guardCount < 2) {
+            sp(GUARD, cost);
         } else if (harvesterCount < 4) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], null, {role: HARVESTER});
+            sp(HARVESTER, cost);
         } else if (builderCount < 2) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], null, {role: BUILDER});
-        }
-        else if (upgraderCount < 4) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
+            sp(BUILDER, cost);
+        } else if (upgraderCount < 4) {
+            sp(UPGRADER, cost);
         } else {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], null, {role: UPGRADER});
+            sp(BUILDER, cost);
         }
-    }  else if ((extCount < 5) && ee >= 300) {
-
-        if (harvesterCount < 2) {
-            Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
-        } else if (guardCount < 1) {
-            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, ATTACK, MOVE, TOUGH, TOUGH], null, {role: GUARD});
-        } else if (healerCount < 1) {
-            Game.spawns.Spawn1.createCreep([HEAL, MOVE], null, {role: HEALER});
-        } else if (guardCount < 3) {
-            Game.spawns.Spawn1.createCreep([RANGED_ATTACK, ATTACK, MOVE], null, {role: GUARD});
-        } else if (harvesterCount < 5) {
-            Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], null, {role: HARVESTER});
-        } else if (builderCount < 5) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: BUILDER});
-        }
-        else if (upgraderCount < 3) {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: UPGRADER});
-        } else {
-            Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, MOVE], null, {role: UPGRADER});
-        }
-
     }
 
 }
+
