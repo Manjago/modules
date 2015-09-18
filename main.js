@@ -137,7 +137,7 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         } else if (upgraderCount < 4) {
             sp(UPGRADER, cost);
         } else {
-            sp(BUILDER, cost);
+            // do nothing
         }
     }
 
