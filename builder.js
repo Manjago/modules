@@ -1,4 +1,4 @@
-module.exports.task = function (num, creep, roads, first) {
+module.exports.task = function (num, creep, roads) {
 
     function findRepo(divider, room) {
         return room.find(FIND_STRUCTURES, {
@@ -37,22 +37,29 @@ module.exports.task = function (num, creep, roads, first) {
 
     function tryRepairRoad(roads) {
 
-        if(!first){
+        if (!roads.length) {
             return false;
         }
 
-        if (roads.length) {
-            creep.say('road ' + roads.length +'!');
-            creep.moveTo(roads[0]);
-            creep.repair(roads[0]);
-            return true;
+        if (roads.length > 10){
+            if (num != 0 && num != 1) {
+                return false;
+            }
         } else {
-            return false;
+            if (num != 0) {
+                return false;
+            }
         }
+
+        creep.say('road ' + roads.length + '!');
+        var inda = num % roads.length;
+        creep.moveTo(roads[inda]);
+        creep.repair(roads[inda]);
+        return true;
     }
 
     function moveAndBuild(targets) {
-        if (targets.length){
+        if (targets.length) {
             var inda = num % targets.length;
             creep.moveTo(targets[inda]);
             creep.build(targets[inda]);
@@ -110,7 +117,7 @@ module.exports.task = function (num, creep, roads, first) {
 
         creep.memory.mode = 'WORK';
 
-        if (tryRepairRoad(roads)){
+        if (tryRepairRoad(roads)) {
             return;
         }
 

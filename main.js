@@ -69,7 +69,7 @@ module.exports.loop = function() {
         }
 
         if (creep.memory.role == BUILDER) {
-            builder.task(bCount, creep, roads, bCount == 0);
+            builder.task(bCount, creep, roads);
             ++bCount;
         }
 
