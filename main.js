@@ -1,18 +1,3 @@
-//test!
-
-for (var name in Memory.creeps) {
-    if (!Game.creeps[name]) {
-        console.log('creep ' + name + 'with role ' + Memory.creeps[name].role + " die");
-        delete Memory.creeps[name];
-    }
-}
-
-for (var name in Memory.spawns) {
-    if (!Game.spawns[name]) {
-        delete Memory.spawns[name];
-    }
-}
-
 
 var harvester = require('harvester');
 var builder = require('builder');
@@ -27,74 +12,91 @@ const BUILDER = 'builder';
 const UPGRADER = 'upgrader';
 const HEALER = 'healer';
 
-var gCount = 0;
-var hCount = 0;
-var bCount = 0;
-var uCount = 0;
-var healCount = 0;
-
-var mainRoom;
-for (var ind in Game.rooms){
-    mainRoom = Game.rooms[ind];
-    break;
-}
-
-var exts = mainRoom.find(FIND_MY_STRUCTURES, {
-    filter: function (i) {
-        return STRUCTURE_EXTENSION == i.structureType
-    }
-});
-
-for (var name in Game.creeps) {
-    var creep = Game.creeps[name];
-
-    if (creep.memory.role == HARVESTER) {
-        harvester.task(creep, exts);
-        ++hCount;
-    }
-
-    if (creep.memory.role == BUILDER) {
-        builder.task(creep);
-        ++bCount;
-    }
-
-    if (creep.memory.role == GUARD) {
-        guard.task(creep);
-        ++gCount;
-    }
-
-    if (creep.memory.role == UPGRADER) {
-        upgrader.task(creep);
-        ++uCount;
-    }
-
-    if (creep.memory.role == HEALER) {
-        healer.task(creep);
-        ++healCount;
-    }
-
-}
-
 Energy.prototype.findClosestCarrier = function() {
     return this.pos.findClosestByPath(FIND_MY_CREEPS, { filter: function(i) {
         return i.getActiveBodyparts(CARRY) > 0 && (i.carry.energy < i.carryCapacity);
     }});
 };
 
-mainRoom.find(FIND_DROPPED_ENERGY).forEach(function(energy) {
-    var creep = energy.findClosestCarrier();
-    if (creep != null && energy != null){
-      creep.moveTo(energy);
-      creep.pickup(energy);
-      creep.say("dropped");
-      if (creep.carry.energy > 0){
-          console.log('' +  creep + ' has energy ' + creep.carry.energy + ' and ready work');
-          creep.memory.mode = 'WORK';
-      }
+module.exports.loop = function() {
+    for (var name in Memory.creeps) {
+        if (!Game.creeps[name]) {
+            console.log('creep ' + name + 'with role ' + Memory.creeps[name].role + " die");
+            delete Memory.creeps[name];
+        }
     }
-});
 
-spawn(gCount, hCount, bCount, uCount, healCount);
+    for (var name in Memory.spawns) {
+        if (!Game.spawns[name]) {
+            delete Memory.spawns[name];
+        }
+    }
+
+    var gCount = 0;
+    var hCount = 0;
+    var bCount = 0;
+    var uCount = 0;
+    var healCount = 0;
+
+    var mainRoom;
+    for (var ind in Game.rooms){
+        mainRoom = Game.rooms[ind];
+        break;
+    }
+
+    var exts = mainRoom.find(FIND_MY_STRUCTURES, {
+        filter: function (i) {
+            return STRUCTURE_EXTENSION == i.structureType
+        }
+    });
+
+    for (var name in Game.creeps) {
+        var creep = Game.creeps[name];
+
+        if (creep.memory.role == HARVESTER) {
+            harvester.task(creep, exts);
+            ++hCount;
+        }
+
+        if (creep.memory.role == BUILDER) {
+            builder.task(creep);
+            ++bCount;
+        }
+
+        if (creep.memory.role == GUARD) {
+            guard.task(creep);
+            ++gCount;
+        }
+
+        if (creep.memory.role == UPGRADER) {
+            upgrader.task(creep);
+            ++uCount;
+        }
+
+        if (creep.memory.role == HEALER) {
+            healer.task(creep);
+            ++healCount;
+        }
+
+    }
+
+    mainRoom.find(FIND_DROPPED_ENERGY).forEach(function(energy) {
+        var creep = energy.findClosestCarrier();
+        if (creep != null && energy != null){
+            creep.moveTo(energy);
+            creep.pickup(energy);
+            creep.say("dropped");
+            if (creep.carry.energy > 0){
+                console.log('' +  creep + ' has energy ' + creep.carry.energy + ' and ready work');
+                creep.memory.mode = 'WORK';
+            }
+        }
+    });
+
+    spawn(gCount, hCount, bCount, uCount, healCount);
+
+
+};
 
 function sp(role, cost){
     console.log('spawn ' + role + ' ' + cost);
