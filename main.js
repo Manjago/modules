@@ -21,7 +21,7 @@ Energy.prototype.findClosestCarrier = function() {
 module.exports.loop = function() {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
-            console.log('creep ' + name + 'with role ' + Memory.creeps[name].role + " die");
+            console.log('creep ' + name + ' with role ' + Memory.creeps[name].role + " die");
             delete Memory.creeps[name];
         }
     }
