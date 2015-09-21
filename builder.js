@@ -42,7 +42,7 @@ module.exports.task = function (num, creep, roads, first) {
         }
 
         if (roads.length) {
-            creep.say('rep road');
+            creep.say('rep road ' + roads.length);
             creep.moveTo(roads[0]);
             creep.repair(roads[0]);
             return true;
