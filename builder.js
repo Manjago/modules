@@ -51,7 +51,7 @@ module.exports.task = function (num, creep, roads) {
             }
         }
 
-        creep.say('road ' + roads.length + '!');
+        creep.say(num + ' road ' + roads.length + '!');
         var inda = num % roads.length;
         creep.moveTo(roads[inda]);
         creep.repair(roads[inda]);
