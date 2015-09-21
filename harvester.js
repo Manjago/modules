@@ -1,8 +1,11 @@
-module.exports.task = function (creep, exts, sources, spawns) {
+module.exports.task = function (num, creep, exts, sources, spawns) {
 
     function loadFromSource(){
-        creep.moveTo(sources[0]);
-        creep.harvest(sources[0]);
+        if (sources.length){
+            var inda = num % sources.length;
+            creep.moveTo(sources[inda]);
+            creep.harvest(sources[inda]);
+        }
     }
 
 

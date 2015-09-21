@@ -13,4 +13,4 @@ module.exports.task = function (creep) {
         creep.moveTo(Game.flags.Flag1);
     }
 
-}
+};

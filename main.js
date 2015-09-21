@@ -64,12 +64,12 @@ module.exports.loop = function() {
         var creep = Game.creeps[name];
 
         if (creep.memory.role == HARVESTER) {
-            harvester.task(creep, exts, sources, spawns);
+            harvester.task(hCount, creep, exts, sources, spawns);
             ++hCount;
         }
 
         if (creep.memory.role == BUILDER) {
-            builder.task(creep, roads, bCount == 0);
+            builder.task(bCount, creep, roads, bCount == 0);
             ++bCount;
         }
 
