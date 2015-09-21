@@ -95,63 +95,63 @@ module.exports.loop = function() {
 
     spawn(gCount, hCount, bCount, uCount, healCount);
 
+    function sp(role, cost){
+        console.log('spawn ' + role + ' ' + cost);
+        Game.spawns.Spawn1.createCreep(spawner.task(role, cost), null, {role: role});
+    }
+
+    function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCount) {
+
+        var ee = Game.spawns.Spawn1.energy;
+        var extCount = 0;
+        for (var inx in exts) {
+            ++extCount;
+            ee = ee + exts[inx].energy;
+        }
+
+        var cost = 0;
+
+        if (extCount < 5 && ee >= 300){
+            cost = 300;
+        } else if (extCount < 10 && ee >= 550) {
+            cost = 550;
+        } else if (extCount < 20 && ee >= 800) {
+            cost = 800;
+        } else if (extCount >= 20 && ee >= 800){
+            cost = 800;
+        }
+
+        // страховка от всеобщей пустоты
+        if (harvesterCount == 0 && cost == 0){
+            cost = 300;
+        }
+
+        if (cost != 0){
+            if (harvesterCount < 2) {
+                sp(HARVESTER, cost);
+            } else if (guardCount < 1) {
+                sp(GUARD, cost);
+            } else if (healerCount < 1) {
+                sp(HEALER, cost);
+            } else if (builderCount < 1) {
+                sp(BUILDER, cost);
+            } else if (upgraderCount < 1) {
+                sp(UPGRADER, cost);
+            } else if (guardCount < 2) {
+                sp(GUARD, cost);
+            } else if (harvesterCount < 4) {
+                sp(HARVESTER, cost);
+            } else if (builderCount < 2) {
+                sp(BUILDER, cost);
+            } else if (upgraderCount < 4) {
+                sp(UPGRADER, cost);
+            } else {
+                // do nothing
+            }
+        }
+
+    }
 
 };
 
-function sp(role, cost){
-    console.log('spawn ' + role + ' ' + cost);
-    Game.spawns.Spawn1.createCreep(spawner.task(role, cost), null, {role: role});
-}
-
-function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCount) {
-
-    var ee = Game.spawns.Spawn1.energy;
-    var extCount = 0;
-    for (var inx in exts) {
-        ++extCount;
-        ee = ee + exts[inx].energy;
-    }
-
-    var cost = 0;
-
-    if (extCount < 5 && ee >= 300){
-        cost = 300;
-    } else if (extCount < 10 && ee >= 550) {
-        cost = 550;
-    } else if (extCount < 20 && ee >= 800) {
-        cost = 800;
-    } else if (extCount >= 20 && ee >= 800){
-        cost = 800;
-    }
-
-    // страховка от всеобщей пустоты
-    if (harvesterCount == 0 && cost == 0){
-        cost = 300;
-    }
-
-    if (cost != 0){
-        if (harvesterCount < 2) {
-            sp(HARVESTER, cost);
-        } else if (guardCount < 1) {
-            sp(GUARD, cost);
-        } else if (healerCount < 1) {
-            sp(HEALER, cost);
-        } else if (builderCount < 1) {
-            sp(BUILDER, cost);
-        } else if (upgraderCount < 1) {
-            sp(UPGRADER, cost);
-        } else if (guardCount < 2) {
-            sp(GUARD, cost);
-        } else if (harvesterCount < 4) {
-            sp(HARVESTER, cost);
-        } else if (builderCount < 2) {
-            sp(BUILDER, cost);
-        } else if (upgraderCount < 4) {
-            sp(UPGRADER, cost);
-        } else {
-            // do nothing
-        }
-    }
-
-}
 
