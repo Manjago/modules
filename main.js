@@ -64,7 +64,7 @@ module.exports.loop = function() {
         var creep = Game.creeps[name];
 
         if (creep.memory.role == HARVESTER) {
-            harvester.task(hCount, creep, exts, sources, spawns);
+            harvester.task(hCount, creep, sources, spawns);
             ++hCount;
         }
 

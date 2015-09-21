@@ -1,4 +1,4 @@
-module.exports.task = function (num, creep, exts, sources, spawns) {
+module.exports.task = function (num, creep, sources, spawns) {
 
     function loadFromSource(){
         if (sources.length){
@@ -11,17 +11,22 @@ module.exports.task = function (num, creep, exts, sources, spawns) {
 
     function tryHarvExt(){
         var foundExt = false;
-        for (var inx in exts) {
-            var ext = exts[inx];
 
-            if (ext.energy < ext.energyCapacity){
-                foundExt = true;
-                creep.moveTo(ext);
-                creep.transferEnergy(ext);
-                creep.say("ext harv ext");
-                break;
+        var myexts = mainRoom.find(FIND_MY_STRUCTURES, {
+            filter: function (i) {
+                return STRUCTURE_EXTENSION == i.structureType && (i.energy < i.energyCapacity);
             }
+        });
+
+        if (myexts.length){
+            var inda = num % myexts.length;
+            var ext = myexts[inda];
+            foundExt = true;
+            creep.moveTo(ext);
+            creep.transferEnergy(ext);
+            creep.say(num + " harv " + inda);
         }
+
         return foundExt;
     }
 
