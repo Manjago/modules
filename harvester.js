@@ -39,7 +39,7 @@ module.exports.task = function (num, creep, sources, spawns) {
                 foundSpwn = true;
                 creep.moveTo(spwn);
                 creep.transferEnergy(spwn);
-                creep.say("spawn harv");
+                creep.say(num + "spawn harv");
                 break;
             }
         }
@@ -49,10 +49,10 @@ module.exports.task = function (num, creep, sources, spawns) {
     if (creep.carry.energy == 0) {
         creep.memory.mode = 'LOAD';
         loadFromSource();
-        creep.say('0 harv');
+        creep.say(num + ' no harv');
     } else if ((creep.carry.energy < creep.carryCapacity) && (creep.memory.mode == 'LOAD')) {
         loadFromSource();
-        creep.say('load harv');
+        creep.say(num +' load harv');
     }
     else {
 
@@ -66,7 +66,7 @@ module.exports.task = function (num, creep, sources, spawns) {
             return;
         }
 
-        creep.say('harv no work');
+        creep.say(num + ' harv no work');
 
     }
 };
