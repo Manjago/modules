@@ -27,7 +27,7 @@ module.exports.task = function (num, creep, roads) {
             }
         });
         if (targets.length) {
-            creep.say('work ext');
+            creep.say(num + ' work ext');
             moveAndBuild(targets);
             return true;
         } else {
@@ -73,7 +73,7 @@ module.exports.task = function (num, creep, roads) {
             }
         });
         if (targets.length) {
-            creep.say('work noext');
+            creep.say(num + ' work noext');
             moveAndBuild(targets);
             return true;
         } else {
@@ -85,7 +85,7 @@ module.exports.task = function (num, creep, roads) {
         var structuresNeedsRepair = findRepo(coeff, creep.room);
 
         if (structuresNeedsRepair.length) {
-            creep.say('rep ' + coeff);
+            creep.say(num + ' rep ' + coeff);
             var inda = num % structuresNeedsRepair.length;
             creep.moveTo(structuresNeedsRepair[inda]);
             creep.repair(structuresNeedsRepair[inda]);
@@ -108,10 +108,10 @@ module.exports.task = function (num, creep, roads) {
 
     if (creep.carry.energy == 0) {
         creep.memory.mode = 'LOAD';
-        creep.say('b 0 energy');
+        creep.say(num + ' b 0 energy');
         loadFromSource();
     } else if ((creep.carry.energy < creep.carryCapacity) && (creep.memory.mode == 'LOAD')) {
-        creep.say('b load');
+        creep.say(num + ' b load ' + (creep.carry.energy / creep.carryCapacity));
         loadFromSource();
     } else {
 
@@ -130,7 +130,7 @@ module.exports.task = function (num, creep, roads) {
         }
 
         if (!tryRepairAll()) {
-            creep.say('no work');
+            creep.say(num + ' no work');
             creep.moveTo(Game.flags.FlagBuilder);
         }
 
