@@ -12,7 +12,7 @@ module.exports.task = function (num, creep, sources, spawns) {
     function tryHarvExt(){
         var foundExt = false;
 
-        var myexts = mainRoom.find(FIND_MY_STRUCTURES, {
+        var myexts = creep.room.find(FIND_MY_STRUCTURES, {
             filter: function (i) {
                 return STRUCTURE_EXTENSION == i.structureType && (i.energy < i.energyCapacity);
             }
