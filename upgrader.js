@@ -5,7 +5,7 @@
  * You can import it from another modules like this:
  * var mod = require('upgrader'); // -> 'a thing'
  */
-module.exports = function (creep) {
+module.exports.task = function (creep) {
 
     if (creep.carry.energy == 0) {
         creep.memory.mode = 'LOAD';

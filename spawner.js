@@ -1,4 +1,4 @@
-module.exports = function (role, cost){
+module.exports.task = function (role, cost){
 
     switch(role){
         case 'guard':

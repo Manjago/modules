@@ -1,11 +1,4 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('harvester'); // -> 'a thing'
- */
-module.exports = function (creep, exts) {
+module.exports.task = function (creep, exts) {
 
     if (creep.carry.energy == 0) {
         creep.memory.mode = 'LOAD';

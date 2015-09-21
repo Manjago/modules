@@ -1,4 +1,4 @@
-module.exports = function (creep) {
+module.exports.task = function (creep) {
 
     var target = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
         filter: function(object) {

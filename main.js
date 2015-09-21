@@ -49,27 +49,27 @@ for (var name in Game.creeps) {
     var creep = Game.creeps[name];
 
     if (creep.memory.role == HARVESTER) {
-        harvester(creep, exts);
+        harvester.task(creep, exts);
         ++hCount;
     }
 
     if (creep.memory.role == BUILDER) {
-        builder(creep);
+        builder.task(creep);
         ++bCount;
     }
 
     if (creep.memory.role == GUARD) {
-        guard(creep);
+        guard.task(creep);
         ++gCount;
     }
 
     if (creep.memory.role == UPGRADER) {
-        upgrader(creep);
+        upgrader.task(creep);
         ++uCount;
     }
 
     if (creep.memory.role == HEALER) {
-        healer(creep);
+        healer.task(creep);
         ++healCount;
     }
 
@@ -98,7 +98,7 @@ spawn(gCount, hCount, bCount, uCount, healCount);
 
 function sp(role, cost){
     console.log('spawn ' + role + ' ' + cost);
-    Game.spawns.Spawn1.createCreep(spawner(role, cost), null, {role: role});
+    Game.spawns.Spawn1.createCreep(spawner.task(role, cost), null, {role: role});
 }
 
 function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCount) {
@@ -118,8 +118,8 @@ function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCo
         cost = 550;
     } else if (extCount < 20 && ee >= 800) {
         cost = 800;
-    } else if (extCount >= 20 && ee >= 1300){
-        cost = 1300;
+    } else if (extCount >= 20 && ee >= 800){
+        cost = 800;
     }
 
     // страховка от всеобщей пустоты
