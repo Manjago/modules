@@ -56,11 +56,15 @@ module.exports.loop = function() {
         }
     });
 
+    var sources = mainRoom.find(FIND_SOURCES);
+
+    var spawns = mainRoom.find(FIND_MY_SPAWNS);
+
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
 
         if (creep.memory.role == HARVESTER) {
-            harvester.task(creep, exts);
+            harvester.task(creep, exts, sources, spawns);
             ++hCount;
         }
 
