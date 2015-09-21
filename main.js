@@ -127,8 +127,8 @@ module.exports.loop = function() {
             cost = 550;
         } else if (extCount < 20 && ee >= 800) {
             cost = 800;
-        } else if (extCount >= 20 && ee >= 800){
-            cost = 800;
+        } else if (extCount >= 20 && ee >= 1300){
+            cost = 1300;
         }
 
         // страховка от всеобщей пустоты
