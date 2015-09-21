@@ -1,4 +1,4 @@
-module.exports.task = function (creep, roads) {
+module.exports.task = function (creep, roads, first) {
 
     function findRepo(divider, room) {
         return room.find(FIND_STRUCTURES, {
@@ -36,6 +36,11 @@ module.exports.task = function (creep, roads) {
     }
 
     function tryRepairRoad(roads) {
+
+        if(!first){
+            return false;
+        }
+
         if (roads.length) {
             creep.say('rep road');
             creep.moveTo(roads[0]);
