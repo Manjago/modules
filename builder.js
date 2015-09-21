@@ -41,14 +41,33 @@ module.exports.task = function (num, creep, roads) {
             return false;
         }
 
-        if (roads.length > 10){
-            if (num != 0 && num != 1) {
-                return false;
-            }
-        } else {
-            if (num != 0) {
-                return false;
-            }
+        var roadMode = Memory.roadMode;
+        if (!roadMode){
+            roadMode = 1;
+            Memory.roadMode = 1;
+        }
+
+        if (roads.length > 10 && roadMode == 1){
+            roadMode = 2;
+            Memory.roadMode = 2;
+        } else if (roads.length < 5 && roadMode == 2){
+            roadMode = 1;
+            Memory.roadMode = 1;
+        }
+
+        switch (roadMode){
+            case 1:
+                if (num != 0) {
+                    return false;
+                }
+                break;
+            case 2:
+                if (num != 0 && num != 1) {
+                    return false;
+                }
+                break;
+            default:
+                break;
         }
 
         creep.say(num + ' road ' + roads.length + '!');
