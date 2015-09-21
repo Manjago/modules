@@ -50,6 +50,12 @@ module.exports.loop = function() {
         }
     });
 
+    var roads = mainRoom.find(FIND_STRUCTURES, {
+        filter: function (i) {
+            return STRUCTURE_ROAD == i.structureType && (i.hits < i.hitsMax);
+        }
+    });
+
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
 
@@ -59,7 +65,7 @@ module.exports.loop = function() {
         }
 
         if (creep.memory.role == BUILDER) {
-            builder.task(creep);
+            builder.task(creep, roads);
             ++bCount;
         }
 

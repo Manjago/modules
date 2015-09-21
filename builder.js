@@ -1,4 +1,4 @@
-module.exports.task = function (creep) {
+module.exports.task = function (creep, roads) {
 
     function findRepo(divider, room) {
         return room.find(FIND_STRUCTURES, {
@@ -35,6 +35,17 @@ module.exports.task = function (creep) {
         }
     }
 
+    function tryRepairRoad(roads) {
+        if (roads.length) {
+            creep.say('rep road');
+            creep.moveTo(roads[0]);
+            creep.repair(roads[0]);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function moveAndBuild(targets) {
         creep.moveTo(targets[0]);
         creep.build(targets[0]);
@@ -55,7 +66,7 @@ module.exports.task = function (creep) {
         }
     }
 
-    function tryRepair(coeff){
+    function tryRepair(coeff) {
         var structuresNeedsRepair = findRepo(coeff, creep.room);
 
         if (structuresNeedsRepair.length) {
@@ -90,6 +101,10 @@ module.exports.task = function (creep) {
 
         creep.memory.mode = 'WORK';
 
+        if (tryRepairRoad(roads)){
+            return;
+        }
+
         if (tryBuildExtensions()) {
             return;
         }
@@ -98,7 +113,7 @@ module.exports.task = function (creep) {
             return;
         }
 
-        if (!tryRepairAll()){
+        if (!tryRepairAll()) {
             creep.say('no work');
             creep.moveTo(Game.flags.FlagBuilder);
         }
