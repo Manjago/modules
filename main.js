@@ -12,13 +12,15 @@ const BUILDER = 'builder';
 const UPGRADER = 'upgrader';
 const HEALER = 'healer';
 
-Energy.prototype.findClosestCarrier = function() {
-    return this.pos.findClosestByPath(FIND_MY_CREEPS, { filter: function(i) {
-        return i.getActiveBodyparts(CARRY) > 0 && (i.carry.energy < i.carryCapacity);
-    }});
+Energy.prototype.findClosestCarrier = function () {
+    return this.pos.findClosestByPath(FIND_MY_CREEPS, {
+        filter: function (i) {
+            return i.getActiveBodyparts(CARRY) > 0 && (i.carry.energy < i.carryCapacity);
+        }
+    });
 };
 
-module.exports.loop = function() {
+module.exports.loop = function () {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
             console.log('creep ' + name + ' with role ' + Memory.creeps[name].role + " die");
@@ -32,14 +34,16 @@ module.exports.loop = function() {
         }
     }
 
-    var gCount = 0;
-    var hCount = 0;
-    var bCount = 0;
-    var uCount = 0;
-    var healCount = 0;
+    var stats = {
+        guard: 0,
+        harvester: 0,
+        builder: 0,
+        upgrader: 0,
+        healer: 0
+    };
 
     var mainRoom;
-    for (var ind in Game.rooms){
+    for (var ind in Game.rooms) {
         mainRoom = Game.rooms[ind];
         break;
     }
@@ -65,52 +69,53 @@ module.exports.loop = function() {
 
         if (creep.memory.role == HARVESTER) {
             harvester.task(hCount, creep, sources, spawns);
-            ++hCount;
+            stats[creep.memory.role]++;
         }
 
         if (creep.memory.role == BUILDER) {
             builder.task(bCount, creep, roads);
-            ++bCount;
+            stats[creep.memory.role]++;
         }
 
         if (creep.memory.role == GUARD) {
             guard.task(creep);
-            ++gCount;
+            stats[creep.memory.role]++;
         }
 
         if (creep.memory.role == UPGRADER) {
             upgrader.task(creep);
-            ++uCount;
+            stats[creep.memory.role]++;
         }
 
         if (creep.memory.role == HEALER) {
             healer.task(creep);
-            ++healCount;
+            stats[creep.memory.role]++;
         }
 
     }
 
-    mainRoom.find(FIND_DROPPED_ENERGY).forEach(function(energy) {
+    mainRoom.find(FIND_DROPPED_ENERGY).forEach(function (energy) {
         var creep = energy.findClosestCarrier();
-        if (creep != null && energy != null){
+        if (creep != null && energy != null) {
             creep.moveTo(energy);
             creep.pickup(energy);
             creep.say("dropped");
-            if (creep.carry.energy > 0){
-                console.log('' +  creep + ' has energy ' + creep.carry.energy + ' and ready work');
+            if (creep.carry.energy > 0) {
+                console.log('' + creep + ' has energy ' + creep.carry.energy + ' and ready work');
                 creep.memory.mode = 'WORK';
             }
         }
     });
 
-    spawn(gCount, hCount, bCount, uCount, healCount);
+    Memory.stats = stats;
+    spawn(stats);
 
-    function sp(role, cost){
+    function sp(role, cost) {
         console.log('spawn ' + role + ' ' + cost);
         Game.spawns.Spawn1.createCreep(spawner.task(role, cost), null, {role: role});
     }
 
-    function spawn(guardCount, harvesterCount, builderCount, upgraderCount, healerCount) {
+    function spawn(options) {
 
         var ee = Game.spawns.Spawn1.energy;
         var extCount = 0;
@@ -121,43 +126,43 @@ module.exports.loop = function() {
 
         var cost = 0;
 
-        if (extCount < 5 && ee >= 300){
+        if (extCount < 5 && ee >= 300) {
             cost = 300;
         } else if (extCount < 10 && ee >= 550) {
             cost = 550;
         } else if (extCount < 20 && ee >= 800) {
             cost = 800;
             // todo автоматическая генерация по весу - и вообще что-то надо делать
-        } else if (extCount >= 20 && ee >= 800){
+        } else if (extCount >= 20 && ee >= 800) {
             cost = 800;
         }
 
         // страховка от всеобщей пустоты
-        if (harvesterCount == 0 && cost == 0){
+        if (options.harvester == 0 && cost == 0) {
             cost = 300;
         }
 
         // переписать этот говнокод
-        if (cost != 0){
-            if (harvesterCount < 2) {
+        if (cost != 0) {
+            if (options.harvester < 2) {
                 sp(HARVESTER, cost);
-            } else if (guardCount < 1) {
+            } else if (options.guard < 1) {
                 sp(GUARD, cost);
-            } else if (healerCount < 1) {
+            } else if (options.healer < 1) {
                 sp(HEALER, cost);
-            } else if (builderCount < 2) {
+            } else if (options.builder < 2) {
                 sp(BUILDER, cost);
-            } else if (upgraderCount < 1) {
+            } else if (options.upgrader < 1) {
                 sp(UPGRADER, cost);
-            } else if (harvesterCount < 3) {
+            } else if (options.harvester < 3) {
                 sp(HARVESTER, cost);
-            } else if (guardCount < 2) {
+            } else if (options.guard < 2) {
                 sp(GUARD, cost);
-            } else if (harvesterCount < 4) {
+            } else if (options.harvester < 4) {
                 sp(HARVESTER, cost);
-            } else if (builderCount < 4) {
+            } else if (options.builder < 4) {
                 sp(BUILDER, cost);
-            } else if (upgraderCount < 2) {
+            } else if (options.upgrader < 2) {
                 sp(UPGRADER, cost);
             } else {
                 // do nothing

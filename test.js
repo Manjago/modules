@@ -18,6 +18,10 @@ var info = {
     }
 };
 
+for(var key in info){
+    console.log(key + ' ' + info[key]);
+}
+
 info.harvester++;
 
 
