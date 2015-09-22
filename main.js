@@ -149,7 +149,7 @@ module.exports.loop = function() {
                 sp(UPGRADER, cost);
             } else if (guardCount < 2) {
                 sp(GUARD, cost);
-            } else if (harvesterCount < 4) {
+            } else if (harvesterCount < 3) {
                 sp(HARVESTER, cost);
             } else if (builderCount < 4) {
                 sp(BUILDER, cost);
