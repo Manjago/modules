@@ -145,7 +145,7 @@ module.exports.loop = function () {
         }
 
         if (cost != 0) {
-            var spawnParam = decider(cost);
+            var spawnParam = decider(options, cost);
             sp(spawnParam);
         }
 
@@ -156,7 +156,7 @@ module.exports.loop = function () {
         this.cost = cost;
     }
 
-    function decider(cost){
+    function decider(options, cost){
         if (options.harvester < 2) {
             return new SpawnParam(HARVESTER, cost);
         } else if (options.guard < 1) {
