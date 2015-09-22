@@ -1,10 +1,4 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('upgrader'); // -> 'a thing'
- */
+'use strict';
 module.exports.task = function (creep) {
 
     if (creep.carry.energy == 0) {

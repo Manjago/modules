@@ -1,1 +1,39 @@
-console.log(2 % 2);
+'use strict';
+function func(){
+    console.log(this);
+}
+
+const GUARD = 'guard';
+const HARVESTER = 'harvester';
+const BUILDER = 'builder';
+const UPGRADER = 'upgrader';
+const HEALER = 'healer';
+
+
+var info = {
+    'harvester': 0,
+    builder: 0,
+    fff: function(){
+        return this.harvester*2 + this.builder;
+    }
+};
+
+info.harvester++;
+
+
+var tt = HARVESTER;
+
+console.log(func());
+console.log(info[tt]);
+console.log(info['harvester']);
+console.log(info[HARVESTER]);
+console.log(info);
+console.log(info.fff());
+console.log(info['gg']);
+console.log(info['gg'] === undefined);
+
+if (info['builder']) {
+    console.log('ok');
+} else {
+    console.log('nook');
+}

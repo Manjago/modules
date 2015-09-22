@@ -1,3 +1,4 @@
+'use strict';
 module.exports.task = function (creep) {
 
     var targets = creep.room.find(FIND_HOSTILE_CREEPS, {

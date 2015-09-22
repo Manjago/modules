@@ -1,3 +1,4 @@
+'use strict';
 module.exports.task = function (num, creep, sources, spawns) {
 
     function loadFromSource(){
