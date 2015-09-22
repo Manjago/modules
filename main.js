@@ -110,11 +110,9 @@ module.exports.loop = function () {
     Memory.stats = stats;
     spawn(stats);
 
-    function sp(spawnParam) {
-        console.log('spawn ' + spawnParam);
-        if (spawnParam){
-            Game.spawns.Spawn1.createCreep(spawner.task(spawnParam.role, spawnParam.cost), null, {role: role});
-        }
+    function sp(role, cost) {
+        console.log('spawn ' + role + ' ' + cost);
+        Game.spawns.Spawn1.createCreep(spawner.task(role, cost), null, {role: role});
     }
 
     function spawn(options) {
@@ -144,43 +142,35 @@ module.exports.loop = function () {
             cost = 300;
         }
 
+        // переписать этот говнокод
         if (cost != 0) {
-            var spawnParam = decider(cost);
-            sp(spawnParam);
+            if (options.harvester < 2) {
+                sp(HARVESTER, cost);
+            } else if (options.guard < 1) {
+                sp(GUARD, cost);
+            } else if (options.healer < 1) {
+                sp(HEALER, cost);
+            } else if (options.builder < 2) {
+                sp(BUILDER, cost);
+            } else if (options.upgrader < 1) {
+                sp(UPGRADER, cost);
+            } else if (options.harvester < 3) {
+                sp(HARVESTER, cost);
+            } else if (options.guard < 2) {
+                sp(GUARD, cost);
+            } else if (options.harvester < 4) {
+                sp(HARVESTER, cost);
+            } else if (options.builder < 4) {
+                sp(BUILDER, cost);
+            } else if (options.upgrader < 2) {
+                sp(UPGRADER, cost);
+            } else {
+                // do nothing
+            }
         }
 
     }
 
-    function SpawnParam(role, cost){
-        this.role = role;
-        this.cost = cost;
-    }
-
-    function decider(cost){
-        if (options.harvester < 2) {
-            return new SpawnParam(HARVESTER, cost);
-        } else if (options.guard < 1) {
-            return new SpawnParam(GUARD, cost);
-        } else if (options.healer < 1) {
-            return new SpawnParam(HEALER, cost);
-        } else if (options.builder < 2) {
-            return new SpawnParam(BUILDER, cost);
-        } else if (options.upgrader < 1) {
-            return new SpawnParam(UPGRADER, cost);
-        } else if (options.harvester < 3) {
-            return new SpawnParam(HARVESTER, cost);
-        } else if (options.guard < 2) {
-            return new SpawnParam(GUARD, cost);
-        } else if (options.harvester < 4) {
-            return new SpawnParam(HARVESTER, cost);
-        } else if (options.builder < 4) {
-            return new SpawnParam(BUILDER, cost);
-        } else if (options.upgrader < 2) {
-            return new SpawnParam(UPGRADER, cost);
-        } else {
-            return null;
-        }
-    }
 };
 
 
