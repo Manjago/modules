@@ -127,15 +127,17 @@ module.exports.loop = function() {
             cost = 550;
         } else if (extCount < 20 && ee >= 800) {
             cost = 800;
-        } else if (extCount >= 20 && ee >= 1300){
-            cost = 1300;
+            // todo автоматическая генерация по весу - и вообще что-то надо делать
+        } else if (extCount >= 20 && ee >= 800){
+            cost = 800;
         }
 
-        // ��������� �� �������� �������
+        // страховка от всеобщей пустоты
         if (harvesterCount == 0 && cost == 0){
             cost = 300;
         }
 
+        // переписать этот говнокод
         if (cost != 0){
             if (harvesterCount < 2) {
                 sp(HARVESTER, cost);
@@ -143,13 +145,15 @@ module.exports.loop = function() {
                 sp(GUARD, cost);
             } else if (healerCount < 1) {
                 sp(HEALER, cost);
-            } else if (builderCount < 1) {
+            } else if (builderCount < 2) {
                 sp(BUILDER, cost);
             } else if (upgraderCount < 1) {
                 sp(UPGRADER, cost);
+            } else if (harvesterCount < 3) {
+                sp(HARVESTER, cost);
             } else if (guardCount < 2) {
                 sp(GUARD, cost);
-            } else if (harvesterCount < 3) {
+            } else if (harvesterCount < 4) {
                 sp(HARVESTER, cost);
             } else if (builderCount < 4) {
                 sp(BUILDER, cost);
