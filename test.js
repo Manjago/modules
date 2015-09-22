@@ -1,5 +1,13 @@
 'use strict';
-function func(){
+
+function SpawnParam(role, cost) {
+    this.role = role;
+    this.cost = cost;
+}
+
+console.log(new SpawnParam('f', 3));
+
+function func() {
     console.log(this);
 }
 
@@ -13,12 +21,12 @@ const HEALER = 'healer';
 var info = {
     'harvester': 0,
     builder: 0,
-    fff: function(){
-        return this.harvester*2 + this.builder;
+    fff: function () {
+        return this.harvester * 2 + this.builder;
     }
 };
 
-for(var key in info){
+for (var key in info) {
     console.log(key + ' ' + info[key]);
 }
 
