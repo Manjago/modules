@@ -137,40 +137,60 @@ module.exports.loop = function () {
             cost = 800;
         }
 
+        var spawnTask = decider(cost);
+        if (spawnTask){
+            sp(spawnTask.role, spawnTask.cost);
+        }
+    }
+
+    function decider(cost){
+
+        var result = {
+            role : "",
+            cost: 0
+        };
+
         // страховка от всеобщей пустоты
         if (options.harvester == 0 && cost == 0) {
-            cost = 300;
+            return decision(HARVESTER, 300);
         }
 
-        // переписать этот говнокод
         if (cost != 0) {
             if (options.harvester < 2) {
-                sp(HARVESTER, cost);
+                return decision(HARVESTER);
             } else if (options.guard < 1) {
-                sp(GUARD, cost);
+                return decision(GUARD);
             } else if (options.healer < 1) {
-                sp(HEALER, cost);
+                return decision(HEALER);
             } else if (options.builder < 2) {
-                sp(BUILDER, cost);
+                return decision(BUILDER);
             } else if (options.upgrader < 1) {
-                sp(UPGRADER, cost);
+                return decision(UPGRADER);
             } else if (options.harvester < 3) {
-                sp(HARVESTER, cost);
+                return decision(HARVESTER);
             } else if (options.guard < 2) {
-                sp(GUARD, cost);
+                return decision(GUARD);
             } else if (options.harvester < 4) {
-                sp(HARVESTER, cost);
+                return decision(HARVESTER);
             } else if (options.builder < 4) {
-                sp(BUILDER, cost);
+                return decision(BUILDER);
             } else if (options.upgrader < 2) {
-                sp(UPGRADER, cost);
+                return decision(UPGRADER);
             } else {
                 // do nothing
             }
         }
 
-    }
+        // переписать этот говнокод
+        function decision(role, parCost) {
+            parCost = parCost || cost;
+            result.role = role;
+            result.cost = parCost;
+            return result;
+        }
 
+
+    }
 };
 
 
