@@ -137,13 +137,13 @@ module.exports.loop = function () {
             cost = 800;
         }
 
-        var spawnTask = decider(cost);
+        var spawnTask = decider(options, cost);
         if (spawnTask){
             sp(spawnTask.role, spawnTask.cost);
         }
     }
 
-    function decider(cost){
+    function decider(options, cost){
 
         var result = {
             role : "",
