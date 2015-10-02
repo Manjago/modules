@@ -71,7 +71,17 @@ module.exports.task = function (num, creep, roads) {
                 break;
         }
 
-        creep.say(num + ' road ' + roads.length + '!');
+
+        if (creep.memory.targetRoadId){
+            var targetIndex = getRoadIndex(creep.memory.targetRoadId, roads);
+            if (targetIndex) {
+                creep.moveTo(roads[targetIndex]);
+                creep.repair(roads[targetIndex]);
+                creep.say(num + ' rs ' + targetIndex + ' ' + roads.length + '!');
+                return true;
+            }
+        }
+
         var inda;
 
         if (num == 0){
@@ -80,9 +90,23 @@ module.exports.task = function (num, creep, roads) {
             inda = roads.length - 1;
         }
 
+        creep.memory.targetRoadId = roads[inda].id;
         creep.moveTo(roads[inda]);
         creep.repair(roads[inda]);
+        creep.say(num + ' r ' + inda + ' ' + roads.length + '!');
         return true;
+    }
+
+    function getRoadIndex(objId, roads){
+        if (objId && roads.length){
+
+            for (var index in roads){
+               var road = roads[index];
+               if (road.id == objId){
+                   return index;
+               }
+            }
+        }
     }
 
     function moveAndBuild(targets) {
