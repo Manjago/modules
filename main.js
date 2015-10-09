@@ -99,9 +99,9 @@ module.exports.loop = function () {
         if (creep != null && energy != null) {
             creep.moveTo(energy);
             creep.pickup(energy);
-            creep.say("dropp " + energy);
+            creep.say("dropp " + energy.energy);
             if (creep.carry.energy > 0) {
-                console.log('' + creep + ' has energy ' + creep.carry.energy + ' wana get ' + energy);
+                console.log('' + creep + ' has energy ' + creep.carry.energy + ' wana get ' + energy.energy);
                 creep.memory.mode = 'WORK';
             }
         }
